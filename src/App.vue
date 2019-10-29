@@ -1,33 +1,43 @@
 <template>
   <div id="app">
-    <rating v-bind:userList = "userList"/>
+    <navbar  v-bind:showRating = "showRating" v-bind:showHistoryRating = "showHistoryRating" />
+
+    <template v-if = "mainPage === 'rating'">
+      <rating/>
+    </template>
+    <template  v-if = "mainPage === 'ratingHistory'">
+      <historyRating/>
+    </template>
   </div>
 </template>
 
 <script>
 import rating from './components/rating.vue'
-import axios from "axios"
+import historyRating from './components/historyRating.vue'
+import navbar from './components/navbar.vue'
+
+
 
 export default {
   name: 'app',
+
   data() {
     return {
-      userList: [],
+       mainPage:"rating",
     }
   },
+
   components: {
-    rating
-  },
-  mounted() {
-    this.reloadRaitingUsers()
+    rating,
+    historyRating,
+    navbar
   },
   methods: {
-    reloadRaitingUsers: function () {
-      axios.get('http://localhost:3000/ajax/rating.json/', {
-      }).then((response) => {
-        this.userList = response.data;   //метод для отрисовки табилцы через другой сервер
-        // console.log(this.userList);
-      })
+    showRating: function () {
+      this.mainPage = "rating";
+    },
+    showHistoryRating: function () {
+      this.mainPage = "ratingHistory";
     }
   }
 }
