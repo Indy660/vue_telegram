@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <rating v-bind:userList = "userList"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import rating from './components/rating.vue'
+import axios from "axios"
 
 export default {
   name: 'app',
+  data() {
+    return {
+      userList: [],
+    }
+  },
   components: {
-    HelloWorld
+    rating
+  },
+  mounted() {
+    this.reloadRaitingUsers()
+  },
+  methods: {
+    reloadRaitingUsers: function () {
+      axios.get('http://localhost:3000/ajax/rating.json/', {
+      }).then((response) => {
+        this.userList = response.data;   //метод для отрисовки табилцы через другой сервер
+        // console.log(this.userList);
+      })
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
