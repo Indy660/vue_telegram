@@ -13,8 +13,11 @@
 <!--второй способ-->
 <template>
   <div>    <!--Должен быть обернут в один div / рендерим компоненты -->
-    <navbar  @showRating = "showRating" @showHistoryRating = "showHistoryRating"/>
+    <navbar @showUserList = "showUserList" @showRating = "showRating" @showHistoryRating = "showHistoryRating"/>
   <!--    отрендерить тот или иногй компонент-->
+    <div v-if = "mainPage === 'userListPage'">
+      <userList/>
+    </div>
     <div v-if = "mainPage === 'ratingPage'">
       <rating/>
     </div>
@@ -28,6 +31,8 @@
 import rating from './components/Rating.vue'
 import historyRating from './components/HistoryRating.vue'
 import navbar from './components/Navbar.vue'
+import userList from './components/UserList.vue'
+
 
 
 
@@ -41,11 +46,15 @@ export default {
   },
 
   components: {
+    userList,
     rating,
     historyRating,
     navbar
   },
   methods: {
+    showUserList: function () {
+      this.mainPage = "userListPage";
+    },
     showRating: function () {
       this.mainPage = "ratingPage";
     },
