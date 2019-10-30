@@ -22,7 +22,8 @@
                 <td>{{user.replyUser}}</td>
                 <td>{{user.replyUserName}} {{user.replyUserFamily}} </td>
                 <td>{{shortMessage(user.replyComment)}}</td>
-                <td>{{getTime(user.time)}}</td>
+<!--            <td>{{getTime(user.time)}}</td>       первый способ -->
+                <td>{{getTime2(user.time)}}</td>
                 <td>{{user.raiting}}</td>
             </tr>
             </tbody>
@@ -32,6 +33,8 @@
 
 <script>
     import axios from "axios"
+    import moment from "moment"
+
     export default {
         name: 'historyRating',
 
@@ -43,8 +46,7 @@
         mounted() {
             setInterval(()=>{
                 this.nowDate = new Date();
-            },1000);
-
+            }, 1000);
             this.reloadRaitingHistoryUsers()
         },
         methods: {
@@ -55,7 +57,8 @@
                     // console.log(this.userListHistoryRating);
                 })
             },
-            getTime(timeMessage) {
+
+            getTime(timeMessage) {          //первый способ
                 let dateSeconds = this.nowDate.getTime() / 1000;
                 let time = Math.round(dateSeconds - timeMessage) ;
                 if (time > 60) time = Math.floor((dateSeconds - timeMessage) / 60) + " минуты" +
@@ -63,13 +66,19 @@
                 else time += " секунд назад";
                 return time
             },
+            getTime2 (timeMessage) {        //второй способ
+                moment.lang('ru');
+                return moment.unix([timeMessage]).toNow(true) + " назад"
+            },
             shortMessage(text) {
                 if (text.length > 8) {
                     let newText = text.substr(0, 5) + "...";
                     return newText
                 }
                 return text
-            }
+            },
+
+
         }
     }
 
