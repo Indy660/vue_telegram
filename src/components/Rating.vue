@@ -29,13 +29,15 @@
 
 export default {
   name: 'rating',
-
+  props: ['mainPage'],
   data: ()=>({
     userListRating: [],
   }),
 
   mounted() {
     this.reloadRaitingUsers();
+      localStorage.setItem('localStoragePage',this.mainPage);
+      this.mainPage = localStorage.getItem(this.localStoragePage)
   },
   methods: {
     reloadRaitingUsers: function () {

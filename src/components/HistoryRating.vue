@@ -37,17 +37,20 @@
 
     export default {
         name: 'historyRating',
-
+        props: ['mainPage'],
         data: ()=>({
             nowDate: new Date(),
             userListHistoryRating :[],
         }),
 
         mounted() {
-            setInterval(()=>{
+            setInterval(()=>{           //первый способ
                 this.nowDate = new Date();
             }, 1000);
-            this.reloadRaitingHistoryUsers()
+
+            this.reloadRaitingHistoryUsers();
+            localStorage.setItem('localStoragePage',this.mainPage);
+            this.mainPage = localStorage.getItem(this.localStoragePage)
         },
         methods: {
             reloadRaitingHistoryUsers: function () {

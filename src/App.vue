@@ -16,16 +16,17 @@
     <navbar @showUserList = "showUserList" @showRating = "showRating" @showHistoryRating = "showHistoryRating"/>
   <!--    отрендерить тот или иногй компонент-->
     <div v-if = "mainPage === 'userListPage'">
-      <userList/>
+      <userList  :mainPage = 'mainPage'  />
     </div>
     <div v-if = "mainPage === 'ratingPage'">
-      <rating/>
+      <rating  :mainPage = 'mainPage'  />
     </div>
     <div v-if = "mainPage === 'ratingHistoryPage'">
-      <historyRating/>
+      <historyRating  :mainPage = 'mainPage'  />
     </div>
   </div>
 </template>
+
 
 <script>
 import rating from './components/Rating.vue'
@@ -34,15 +35,17 @@ import navbar from './components/Navbar.vue'
 import userList from './components/UserList.vue'
 
 
-
-
 export default {
   name: 'app',
 
-  data() {
+  data() { // Переменные которые можно использовать в шаблоне
     return {
-       mainPage:"ratingHistoryPage",
+      mainPage: "",
+      localStoragePage : ''
     }
+  },
+  mounted() { // Функция загрузки данных
+    this.mainPage = localStorage.getItem('localStoragePage')        //сохранение страницы после загрузки
   },
 
   components: {

@@ -5,6 +5,7 @@
             <tr>
                 <th scope="col">№</th>
                 <th scope="col">Id</th>
+                <th scope="col">Никнейм</th>
                 <th scope="col">Поьзователь</th>
             </tr>
             </thead>
@@ -13,6 +14,7 @@
             <tr  v-for= '(user, index) in userList.userArray' :key='index'>   <!--чтобы можно было вывести номер строки -->
                 <td>{{index+1}}</td>
                 <td>{{user.userId}}</td>
+                <td>{{user.nickName}}</td>
                 <td>{{user.userName}} {{user.userFamily}}</td>
             </tr>
             </tbody>
@@ -25,11 +27,14 @@
 
 export default {
     name: "userList",
+    props: ['mainPage'],
     data: ()=>({
         userList: [],
     }),
     mounted() {
         this.reloadUserList();
+        localStorage.setItem('localStoragePage',this.mainPage);
+        this.mainPage = localStorage.getItem(this.localStoragePage)
     },
     methods: {
         reloadUserList: function () {
